@@ -1,23 +1,15 @@
 # @theyahia/yandexgpt-mcp
 
-MCP server for the Yandex GPT API — text completion, async completion, and tokenization.
+MCP-сервер для Yandex GPT API — генерация текста, асинхронная генерация, токенизация. **3 инструмента.**
 
-## Tools
+[![npm](https://img.shields.io/npm/v/@theyahia/yandexgpt-mcp)](https://www.npmjs.com/package/@theyahia/yandexgpt-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-| Tool | Description |
-|------|-------------|
-| `completion` | Synchronous text generation via YandexGPT |
-| `async_completion` | Asynchronous text generation, returns operation ID |
-| `tokenize` | Tokenize text using a YandexGPT model |
+Часть серии [Russian API MCP](https://github.com/theYahia/russian-mcp) (50 серверов) by [@theYahia](https://github.com/theYahia).
 
-## Setup
-
-1. Get your API key at https://console.cloud.yandex.ru/
-2. Set `YANDEX_API_KEY` and `YANDEX_FOLDER_ID` environment variables
+## Установка
 
 ### Claude Desktop
-
-Add to `claude_desktop_config.json`:
 
 ```json
 {
@@ -25,19 +17,42 @@ Add to `claude_desktop_config.json`:
     "yandexgpt": {
       "command": "npx",
       "args": ["-y", "@theyahia/yandexgpt-mcp"],
-      "env": {
-        "YANDEX_API_KEY": "your-api-key",
-        "YANDEX_FOLDER_ID": "your-folder-id"
-      }
+      "env": { "YANDEX_API_KEY": "your-api-key", "YANDEX_FOLDER_ID": "your-folder-id" }
     }
   }
 }
 ```
 
-## Authentication
+### Claude Code
 
-Uses `Api-Key` header with `YANDEX_API_KEY`. The `YANDEX_FOLDER_ID` is used to construct model URIs.
+```bash
+claude mcp add yandexgpt -e YANDEX_API_KEY=your-api-key -e YANDEX_FOLDER_ID=your-folder-id -- npx -y @theyahia/yandexgpt-mcp
+```
 
-## License
+### VS Code / Cursor
+
+```json
+{ "servers": { "yandexgpt": { "command": "npx", "args": ["-y", "@theyahia/yandexgpt-mcp"], "env": { "YANDEX_API_KEY": "your-api-key", "YANDEX_FOLDER_ID": "your-folder-id" } } } }
+```
+
+> Требуется `YANDEX_API_KEY` и `YANDEX_FOLDER_ID`. Получите в [консоли Yandex Cloud](https://console.cloud.yandex.ru/).
+
+## Инструменты (3)
+
+| Инструмент | Описание |
+|------------|----------|
+| `completion` | Синхронная генерация текста через YandexGPT |
+| `async_completion` | Асинхронная генерация, возвращает ID операции |
+| `tokenize` | Токенизация текста моделью YandexGPT |
+
+## Примеры
+
+```
+Сгенерируй текст через YandexGPT: "Напиши стихотворение о весне"
+Запусти асинхронную генерацию для длинного текста
+Токенизируй текст "Привет, мир!"
+```
+
+## Лицензия
 
 MIT
