@@ -1,12 +1,18 @@
 {
   "name": "@theyahia/yandexgpt-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Yandex GPT API — text completion, async completion, tokenization.",
   "type": "module",
   "main": "dist/index.js",
-  "bin": { "yandexgpt-mcp": "dist/index.js" },
-  "files": ["dist"],
-  "engines": { "node": ">=18.0.0" },
+  "bin": {
+    "yandexgpt-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/index.ts",
@@ -22,11 +28,26 @@
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"
   },
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "mcpName": "io.github.theYahia/yandexgpt-mcp",
-  "keywords": ["mcp", "mcp-server", "model-context-protocol", "claude", "ai", "russian-api", "yandexgpt", "yandex", "llm"],
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "russian-api",
+    "yandexgpt",
+    "yandex",
+    "llm"
+  ],
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/theYahia/yandexgpt-mcp.git" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theYahia/yandexgpt-mcp.git"
+  },
   "homepage": "https://github.com/theYahia/yandexgpt-mcp#readme",
   "author": "Yahia"
 }
