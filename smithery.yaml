@@ -1,0 +1,26 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      YANDEXGPT_API_KEY:
+        type: string
+        description: "Yandex Cloud API key (alternative to IAM token)"
+      YANDEXGPT_IAM_TOKEN:
+        type: string
+        description: "Yandex Cloud IAM token (alternative to API key)"
+      YANDEXGPT_FOLDER_ID:
+        type: string
+        description: "Yandex Cloud folder ID"
+    required:
+      - YANDEXGPT_FOLDER_ID
+  commandFunction: |
+    (config) => ({
+      command: "npx",
+      args: ["-y", "@theyahia/yandexgpt-mcp"],
+      env: {
+        YANDEXGPT_API_KEY: config.YANDEXGPT_API_KEY ?? "",
+        YANDEXGPT_IAM_TOKEN: config.YANDEXGPT_IAM_TOKEN ?? "",
+        YANDEXGPT_FOLDER_ID: config.YANDEXGPT_FOLDER_ID,
+      },
+    })

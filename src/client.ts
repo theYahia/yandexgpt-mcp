@@ -3,18 +3,30 @@ const TIMEOUT = 30_000;
 const MAX_RETRIES = 3;
 
 function getHeaders(): Record<string, string> {
-  const apiKey = process.env.YANDEX_API_KEY;
-  if (!apiKey) throw new Error("YANDEX_API_KEY не задан");
+  const apiKey = process.env.YANDEXGPT_API_KEY ?? process.env.YANDEX_API_KEY;
+  const iamToken = process.env.YANDEXGPT_IAM_TOKEN;
+
+  if (!apiKey && !iamToken) {
+    throw new Error(
+      "Требуется YANDEXGPT_API_KEY или YANDEXGPT_IAM_TOKEN. " +
+      "Задайте одну из переменных окружения."
+    );
+  }
+
+  const auth = iamToken
+    ? `Bearer ${iamToken}`
+    : `Api-Key ${apiKey}`;
+
   return {
-    "Authorization": `Api-Key ${apiKey}`,
+    Authorization: auth,
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
   };
 }
 
 export function getFolderId(): string {
-  const folderId = process.env.YANDEX_FOLDER_ID;
-  if (!folderId) throw new Error("YANDEX_FOLDER_ID не задан");
+  const folderId = process.env.YANDEXGPT_FOLDER_ID ?? process.env.YANDEX_FOLDER_ID;
+  if (!folderId) throw new Error("YANDEXGPT_FOLDER_ID не задан");
   return folderId;
 }
 
@@ -53,4 +65,21 @@ export async function yandexPost(path: string, body: unknown): Promise<unknown> 
     }
   }
   throw new Error("YandexGPT: все попытки исчерпаны");
+}
+
+export async function yandexGet(url: string): Promise<unknown> {
+  const apiKey = process.env.YANDEXGPT_API_KEY ?? process.env.YANDEX_API_KEY;
+  const iamToken = process.env.YANDEXGPT_IAM_TOKEN;
+  const auth = iamToken ? `Bearer ${iamToken}` : `Api-Key ${apiKey}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: { Authorization: auth, Accept: "application/json" },
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`YandexGPT HTTP ${response.status}: ${text || response.statusText}`);
+  }
+  return response.json();
 }
