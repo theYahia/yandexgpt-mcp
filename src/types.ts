@@ -48,3 +48,28 @@ export interface TokenizeResponse {
   tokens: Array<{ id: string; text: string }>;
   modelVersion: string;
 }
+
+export interface EmbeddingResponse {
+  embedding: number[];
+  numTokens: string;
+  modelVersion: string;
+}
+
+export interface ClassificationLabel {
+  name: string;
+}
+
+export interface ClassificationResult {
+  predictions: Array<{ label: string; confidence: number }>;
+  modelVersion: string;
+}
+
+export interface OperationResponse {
+  id: string;
+  description: string;
+  createdAt: string;
+  modifiedAt: string;
+  done: boolean;
+  response?: unknown;
+  error?: { code: number; message: string };
+}

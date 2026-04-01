@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/yandexgpt-mcp",
-  "version": "1.0.1",
-  "description": "MCP server for Yandex GPT API — text completion, async completion, tokenization.",
+  "version": "3.0.0",
+  "description": "MCP server for Yandex GPT API — completion, async completion, embeddings, classification, summarization, tokenization. 8 tools.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -17,6 +17,8 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -26,7 +28,8 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.4"
   },
   "publishConfig": {
     "access": "public"
@@ -41,7 +44,10 @@
     "russian-api",
     "yandexgpt",
     "yandex",
-    "llm"
+    "llm",
+    "embeddings",
+    "classification",
+    "summarization"
   ],
   "license": "MIT",
   "repository": {

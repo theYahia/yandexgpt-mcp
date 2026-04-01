@@ -1,4 +1,7 @@
-const API_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1";
+const LLM_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1";
+const OPERATIONS_BASE = "https://operation.api.cloud.yandex.net/operations";
+const EMBEDDINGS_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1";
+const CLASSIFIER_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1/fewShotTextClassification";
 const TIMEOUT = 30_000;
 const MAX_RETRIES = 3;
 
@@ -18,16 +21,14 @@ export function getFolderId(): string {
   return folderId;
 }
 
-export async function yandexPost(path: string, body: unknown): Promise<unknown> {
+async function fetchWithRetry(url: string, options: RequestInit): Promise<unknown> {
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), TIMEOUT);
 
     try {
-      const response = await fetch(`${API_BASE}${path}`, {
-        method: "POST",
-        headers: getHeaders(),
-        body: JSON.stringify(body),
+      const response = await fetch(url, {
+        ...options,
         signal: controller.signal,
       });
       clearTimeout(timer);
@@ -53,4 +54,27 @@ export async function yandexPost(path: string, body: unknown): Promise<unknown> 
     }
   }
   throw new Error("YandexGPT: все попытки исчерпаны");
+}
+
+export async function yandexPost(path: string, body: unknown): Promise<unknown> {
+  return fetchWithRetry(`${LLM_BASE}${path}`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(body),
+  });
+}
+
+export async function yandexClassify(body: unknown): Promise<unknown> {
+  return fetchWithRetry(CLASSIFIER_BASE, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(body),
+  });
+}
+
+export async function yandexGetOperation(operationId: string): Promise<unknown> {
+  return fetchWithRetry(`${OPERATIONS_BASE}/${operationId}`, {
+    method: "GET",
+    headers: getHeaders(),
+  });
 }
