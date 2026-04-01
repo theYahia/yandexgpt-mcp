@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/yandexgpt-mcp",
-  "version": "3.0.0",
-  "description": "MCP server for Yandex GPT API — completion, async completion, embeddings, classification, summarization, tokenization. 8 tools.",
+  "version": "3.0.1",
+  "description": "MCP server for YandexGPT — completions, embeddings, classification, summarization (Russia)",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -47,7 +47,9 @@
     "llm",
     "embeddings",
     "classification",
-    "summarization"
+    "summarization",
+    "api",
+    "typescript"
   ],
   "license": "MIT",
   "repository": {
